@@ -1,0 +1,14 @@
+<h1>Movies</h1>
+
+<!-- Grid design with 4 movies per row -->
+<div class="movie-grid">
+  <div *ngFor="let movie of $movies | async; trackBy: trackByMovieId" class="movie-card">
+    <img [src]="movie.poster" alt="{{ movie.title }}" class="movie-poster" />
+    <h2>{{ movie.title }}</h2>
+    <p class="short-description">{{ movie.shortDescription }}</p>
+    <div class="button-container">
+      <button class="view-button">View</button>
+      <button class="reserve-button">Reserve</button>
+    </div>
+  </div>
+</div>

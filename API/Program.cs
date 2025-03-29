@@ -12,6 +12,20 @@ SQLitePCL.Batteries.Init(); // <-- ADD THIS LINE
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")  // Angular aplikacija na portu 3000
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 // Configure SQLite database
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -34,7 +48,7 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
         ValidateIssuer = false,
         ValidateAudience = false,
         RequireExpirationTime = true,
@@ -90,10 +104,18 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";  // Swagger UI will be available at /swagger
     });
 }
+// Apply CORS policy
+app.UseCors("AllowAngularApp");
+
+// Dodaj poruku u konzolu
+Console.WriteLine("CORS policy 'AllowAngularApp' je uspešno konfigurisana. Angular aplikacija može pristupiti API-ju.");
 
 // Use authentication and authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Enable CORS
+app.UseCors("AllowAngularApp"); // Ovdje omogućavamo CORS politiku
 
 // Map controllers (for API endpoints)
 app.MapControllers();
