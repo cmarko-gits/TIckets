@@ -29,5 +29,19 @@ namespace API.Controllers
 
             return Ok(movies);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MovieDto>> GetMovieById(int id)
+        {
+            var movie = await _movieService.GetMovieByIdAsync(id);
+
+            if (movie == null)
+            {
+                return NotFound($"Film sa ID-jem {id} nije pronađen.");
+            }
+
+            return Ok(movie);
+        }
+
     }
 }

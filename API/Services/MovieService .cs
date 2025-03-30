@@ -26,5 +26,18 @@ namespace API.Services
             var jsonString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<MovieDto>>(jsonString);
         }
+
+        public async Task<MovieDto> GetMovieByIdAsync(int id)
+        {
+            var response = await _httpClient.GetAsync($"https://movie.pequla.com/api/movie/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<MovieDto>(jsonString);
+        }
+
     }
 }

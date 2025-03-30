@@ -7,8 +7,10 @@
     <h2>{{ movie.title }}</h2>
     <p class="short-description">{{ movie.shortDescription }}</p>
     <div class="button-container">
-      <button class="view-button">View</button>
-      <button class="reserve-button">Reserve</button>
+      <a [routerLink]="['/movies', movie.movieId]">
+        <button class="view-button">View</button>
+      </a>
+            <button class="reserve-button">Reserve</button>
     </div>
   </div>
 </div>

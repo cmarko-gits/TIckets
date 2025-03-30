@@ -1,0 +1,232 @@
+/* General movie details container styling */
+.movie-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movie-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movie-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.movie-poster {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.movie-description {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* Movie information styling */
+.movie-info {
+  margin-top: 30px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.actor-list,
+.genre-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.actor-list li,
+.genre-list li {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+/* Form styling for quantity input */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+label {
+  font-size: 1.1rem;
+  color: #333;
+  margin-right: 10px;
+  flex: 1;
+}
+
+input[type="number"] {
+  width: 60px;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  flex: 2;
+}
+
+button[type="submit"] {
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Back to Movies button styling */
+.back-button-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.back-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #218838;
+}
+
+/* Loading indicator */
+.loading-container {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-details-container {
+    padding: 15px;
+  }
+
+  .movie-title {
+    font-size: 1.8rem;
+  }
+
+  .movie-description {
+    font-size: 0.95rem;
+  }
+
+  .movie-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .movie-info h4 {
+    font-size: 1.1rem;
+  }
+
+  .actor-list li,
+  .genre-list li {
+    font-size: 0.95rem;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    margin-bottom: 5px;
+    flex: unset;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .back-button-container {
+    margin-top: 20px;
+  }
+}
+
+/* Very small screens (e.g., phones) */
+@media (max-width: 480px) {
+  .movie-title {
+    font-size: 1.6rem;
+  }
+
+  .movie-description {
+    font-size: 0.9rem;
+  }
+
+  .movie-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .movie-info h4 {
+    font-size: 1rem;
+  }
+
+  .actor-list li,
+  .genre-list li {
+    font-size: 0.9rem;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label {
+    margin-bottom: 5px;
+    flex: unset;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .back-button-container {
+    margin-top: 15px;
+  }
+}
