@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { Movie } from '../../model/movie.model';
-import { MovieService } from '../../services/movie.service';
+
 import { HttpClientModule } from '@angular/common/http';  // Importuj HttpClientModule
 import { RouterModule } from '@angular/router';
+import { MovieService } from '../../core/services/movie.service';
+import { Movie } from '../../model/movie.model';
 
   @Component({
     selector: 'app-movie-list',

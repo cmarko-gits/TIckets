@@ -14,14 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Configure CORS
+// Configure CORS to allow credentials
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")  // Angular aplikacija na portu 3000
+        policy.WithOrigins("http://localhost:3000")  // Angular app on port 3000
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();  // Allow credentials (cookies, HTTP authentication)
     });
 });
 
@@ -104,8 +105,8 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "swagger";  // Swagger UI will be available at /swagger
     });
 }
-// Apply CORS policy
-app.UseCors("AllowAngularApp");
+
+app.UseCors("AllowAngularApp");  
 
 // Dodaj poruku u konzolu
 Console.WriteLine("CORS policy 'AllowAngularApp' je uspešno konfigurisana. Angular aplikacija može pristupiti API-ju.");

@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
-import { MovieService } from '../../services/movie.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Movie } from '../../model/movie.model';
-import { CartService } from '../../services/cart.service';
+
 import { FormsModule } from '@angular/forms'; // Importujte FormsModule
 import { CommonModule } from '@angular/common'; // Importujte CommonModule
+import { MovieService } from '../../core/services/movie.service';
+import { CartService } from '../../core/services/cart.service';
+import { Movie } from '../../model/movie.model';
 
 @Component({
   selector: 'app-movie-detail',

@@ -23,8 +23,8 @@ namespace API.Controllers
             _userManager = userManager;
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             // Provera da li je korisničko ime zauzeto
