@@ -3,12 +3,19 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  imports : [ FormsModule , CommonModule , ReactiveFormsModule]
+  imports : [ FormsModule , CommonModule , ReactiveFormsModule , MatCardModule,    MatCardModule,
+    MatFormFieldModule,  // Dodaj ovo
+    MatInputModule,      // Dodaj ovo
+    MatButtonModule]
 })
 export class RegisterComponent {
   registerForm: FormGroup;

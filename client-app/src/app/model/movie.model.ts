@@ -13,8 +13,8 @@ export interface Movie {
   runTime: number;
   createdAt: string;
   updatedAt: string | null;
-  price?: number;  // Dodajte polje za cenu
   director: { directorId: number; name: string };
   movieActors: { movieActorId: number; movieId: number; actorId: number; actor: { actorId: number; name: string } }[];
   movieGenres: { movieGenreId: number; movieId: number; genreId: number; genre: { genreId: number; name: string } }[];
+  isDescriptionExpanded?: boolean; // Za proširenje opisa
 }
