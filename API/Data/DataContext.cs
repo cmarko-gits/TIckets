@@ -7,5 +7,7 @@ namespace API.Data
     public class DataContext : IdentityDbContext<User>
     {
         public DataContext(DbContextOptions options) : base(options){}
+
+        public DbSet<BasketItem> BasketItems {get;set;}
     }
 }
