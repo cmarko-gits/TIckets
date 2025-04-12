@@ -42,7 +42,7 @@ namespace API.Controllers
         }
 
         // POST: api/Basket/add/{movieId}
-        [HttpPost("add/{movieId}")]
+        [HttpPost]
         public async Task<ActionResult<BasketItem>> AddMovieToBasket(int movieId)
         {
             // Preuzimamo korisničko ime iz tokena
@@ -81,5 +81,10 @@ namespace API.Controllers
                 return Ok(basketItem);
             
         }
+
+
+
     }
+
+    
 }

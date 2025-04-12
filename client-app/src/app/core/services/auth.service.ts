@@ -1,56 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/Account'; // API URL
+  private apiUrl = 'http://localhost:5000/api/account';
+  private tokenKey = 'jwt_token';
+  private jwtHelper = new JwtHelperService();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  // Registracija korisnika
-  register(userData: { username: string; email: string; password: string; confirmPassword: string }) {
-    const payload = {
-      username: userData.username,
-      email: userData.email,
-      password: userData.password
-    };
-    return this.http.post(`${this.apiUrl}/register`, payload);
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+      .pipe(tap(response => {
+        localStorage.setItem(this.tokenKey, response.token);
+      }));
+  }
+  register(userData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, userData); // POST request for user registration
   }
 
-  // Login korisnika i sačuvaj token u localStorage
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials, { withCredentials: true }).pipe(
-      tap((response: any) => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username', response.username); // 👈 Sačuvaj username
-        }
-      })
-    );
-  }
-  
-  getUsername(): string | null {
-    return localStorage.getItem('username');
-  }
-  
-  // Metoda za logout (uklanjanje tokena iz localStorage)
-  logout(){
-    // Obriši token iz localStorage prilikom logovanja
-    localStorage.removeItem('token');
-  }
-
-  // Metoda za dobijanje tokena iz localStorage
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem(this.tokenKey);
   }
 
-  // Metoda za proveru da li je korisnik ulogovan
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.router.navigate(['/login']);
+  }
 
+  getUsername(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken?.unique_name || null;
+  }
 }

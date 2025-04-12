@@ -10,13 +10,20 @@ import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ]
 })
 export class LoginComponent {
-  loginForm: FormGroup;
+  loginForm: FormGroup; // ✅ Ovo ti je falilo
 
   constructor(
     private fb: FormBuilder,
@@ -31,18 +38,15 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      const credentials = this.loginForm.value;
+      const { email, password } = this.loginForm.value;
 
-      this.authService.login(credentials).subscribe({
-        next: (user) => {
-          if (user && user.token) {
-            localStorage.setItem('token', user.token);
-            alert('Login successful');
-            this.router.navigate(['/']);
-          }
+      this.authService.login(email, password).subscribe({
+        next: () => {
+          this.router.navigate(['/']); // ili neka druga ruta
         },
         error: (err) => {
-          alert('Login failed: ' + err.error);
+          console.error('Login failed:', err);
+          alert('Neuspešna prijava. Proveri podatke.');
         }
       });
     }

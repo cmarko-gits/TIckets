@@ -1,29 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [MatButtonModule, MatToolbarModule , CommonModule]
+  standalone: true,
+  imports: [
+    CommonModule, // ✅ Obavezno za *ngIf
+    MatButtonModule, // Dodaj button module
+    MatToolbarModule // Dodaj toolbar module
+  ]
 })
 export class HeaderComponent implements OnInit {
   username: string | null = null;
 
   constructor(
-    public authService: AuthService,
+    public authService: AuthService, 
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.username = this.authService.getUsername();  // Set the username on initialization
+  ngOnInit(): void {
+    this.username = this.authService.getUsername();
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
