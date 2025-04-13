@@ -13,7 +13,7 @@ export class BasketService {
 
   // Dohvati stavke iz korpe
   getBasket(): Observable<BasketItem[]> {
-    return this.http.get<BasketItem[]>(`${this.apiUrl}`);
+    return this.http.get<BasketItem[]>(`${this.apiUrl}/Basket`);
   }
 
   // Dodaj film u korpu
