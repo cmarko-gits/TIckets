@@ -23,7 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
   ]
 })
 export class LoginComponent {
-  loginForm: FormGroup; // ✅ Ovo ti je falilo
+  loginForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -38,15 +38,15 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const userData = this.loginForm.value; // userData = { email, password }
 
-      this.authService.login(email, password).subscribe({
+      this.authService.login(userData).subscribe({
         next: () => {
-          this.router.navigate(['/']); // ili neka druga ruta
+          this.router.navigate(['/']); // Navigacija nakon uspešnog logina
         },
         error: (err) => {
           console.error('Login failed:', err);
-          alert('Neuspešna prijava. Proveri podatke.');
+          alert('Neuspešna prijava. Proverite podatke.');
         }
       });
     }

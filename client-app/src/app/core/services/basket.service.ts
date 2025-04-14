@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BasketItem } from '../../model/basketItem.model';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasketService {
-  private apiUrl = `http://localhost:5000/api`; // API URL
+  private baseUrl = 'Basket'; // Pošto ApiService već ima apiUrl
 
-  constructor(private http: HttpClient) {}
+  constructor(private apiService: ApiService) {}
 
   // Dohvati stavke iz korpe
   getBasket(): Observable<BasketItem[]> {
-    return this.http.get<BasketItem[]>(`${this.apiUrl}/Basket`);
+    return this.apiService.get<BasketItem[]>(this.baseUrl);
   }
 
   // Dodaj film u korpu
   addToBasket(movieId: number): Observable<BasketItem> {
-    return this.http.post<BasketItem>(`${this.apiUrl}/Basket?movieId=${movieId}`, {});
+    return this.apiService.post<BasketItem>(`${this.baseUrl}?movieId=${movieId}`, {});
   }
 }

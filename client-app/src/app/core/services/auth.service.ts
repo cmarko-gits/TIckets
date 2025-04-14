@@ -1,48 +1,57 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
+import { User, UserFormValues } from '../../model/user.mode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/Account';
-  private tokenKey = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik1hcmtvIiwibmFtZWlkIjoiMDhjY2QzNTYtZDg4Ny00ZWM0LWEwMTktYTc3MjUzOTA4ZjExIiwiZW1haWwiOiJtYXJrb0BnbWFpbC5jb20iLCJuYmYiOjE3NDQ2MzYxMDEsImV4cCI6MTc0NTI0MDkwMSwiaWF0IjoxNzQ0NjM2MTAxfQ.9Nm-4xAwDjG_48o02of6ddhl1HdVu9agy0gI4pJ1P6GY3aqqS2sPs6OedBVMQa5oCWikbFxnyaxUCRjg1bYP-w';
   private jwtHelper = new JwtHelperService();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
-      .pipe(tap(response => {
-        localStorage.setItem(this.tokenKey, response.token);
-      }));
-  }
-  register(userData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, userData); // POST request for user registration
+  // Metoda za login
+  login(userData: UserFormValues): Observable<User> {
+    return this.apiService.post<User>(`Account/login`, userData).pipe(
+      tap(response => {
+        localStorage.setItem('token', response.token); // Spremanje tokena u localStorage
+      })
+    );
   }
 
+  // Metoda za registraciju
+  register(userData: UserFormValues): Observable<User> {
+    return this.apiService.post<User>(`Account/register`, userData);
+  }
+
+  // Metoda za logout
+  logout(): void {
+    localStorage.removeItem('token');  // Brisanje tokena iz localStorage
+    this.router.navigate(['/login']);   // Preusmeravanje na login stranicu
+  }
+
+  // Metoda za dobijanje tokena iz localStorage
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return localStorage.getItem('token');
   }
 
+  // Metoda za proveru da li je korisnik prijavljen (validnost tokena)
   isLoggedIn(): boolean {
     const token = this.getToken();
-    return token != null && !this.jwtHelper.isTokenExpired(token);
+    return token != null && !this.jwtHelper.isTokenExpired(token);  // Provera da li je token istekao
   }
 
-  logout(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
-  }
-
+  // Metoda za dobijanje korisničkog imena iz dekodiranog tokena
   getUsername(): string | null {
     const token = this.getToken();
-    if (!token) return null;
-    const decodedToken = this.jwtHelper.decodeToken(token);
-    return decodedToken?.unique_name || null;
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      return decodedToken?.unique_name || null;  // Vraća korisničko ime iz tokena
+    }
+    return null;
   }
 }
