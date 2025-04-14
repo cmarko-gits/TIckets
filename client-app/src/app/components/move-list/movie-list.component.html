@@ -1,33 +1,78 @@
-<div class="container">
-  <h1>Movies</h1>
+<!-- Main container -->
+<div class="main-container">
+  <!-- Filters Section placed outside the main container, on the left side -->
+  <div class="filter-container">
+    <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Search</mat-label>
+        <input matInput formControlName="searchTerm" placeholder="Search by title 
+        ">
+      </mat-form-field>
 
-  <mat-grid-list cols="3" gutterSize="16px" rowHeight="1:1.5">
-    <mat-grid-tile *ngFor="let movie of movies$ | async;">
-      <mat-card class="movie-card">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Genres</mat-label>
+        <input matInput formControlName="genres" placeholder="Genres (comma-separated)">
+      </mat-form-field>
 
-        <!-- Poster preko Angular Material -->
-        <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" class="movie-poster">
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Actors</mat-label>
+        <input matInput formControlName="actors" placeholder="Actors (comma-separated)">
+      </mat-form-field>
 
-        <!-- Naslov i datum -->
-        <mat-card-header>
-          <mat-card-title class="title">{{ movie.title }}</mat-card-title>
-          <mat-card-subtitle>{{ movie.startDate | date: 'mediumDate' }}</mat-card-subtitle>
-        </mat-card-header>
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Director</mat-label>
+        <input matInput formControlName="director" placeholder="Director">
+      </mat-form-field>
 
-        <!-- Opis sa scrollom ako je dug -->
-        <mat-card-content>
-          <div class="description-scroll">
-            {{ movie.description }}
-          </div>
-        </mat-card-content>
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Min Duration</mat-label>
+        <input matInput type="number" formControlName="minDuration" placeholder="Min Duration">
+      </mat-form-field>
 
-        <!-- Dugmad -->
-        <mat-card-actions>
-          <button mat-button color="primary" [routerLink]="['/movies', movie.movieId]">View</button>
-          <button mat-button color="accent" (click)="addToBasket(movie)">Add to Basket</button>
-        </mat-card-actions>
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Max Duration</mat-label>
+        <input matInput type="number" formControlName="maxDuration" placeholder="Max Duration">
+      </mat-form-field>
 
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+      <mat-form-field appearance="fill" class="filter-field">
+        <mat-label>Order By</mat-label>
+        <mat-select formControlName="orderBy">
+          <mat-option value="title">Title</mat-option>
+          <mat-option value="titleDesc">Title Desc</mat-option>
+          <mat-option value="duration">Duration</mat-option>
+          <mat-option value="durationDesc">Duration Desc</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="submit">Apply Filters</button>
+    </form>
+  </div>
+
+  <!-- Movies Section -->
+  <div class="movie-container">
+    <h1>Movies</h1>
+    <mat-grid-list cols="3" gutterSize="16px" rowHeight="1:1.5">
+      <mat-grid-tile *ngFor="let movie of movies$ | async">
+        <mat-card class="movie-card">
+          <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" class="movie-poster">
+          <mat-card-header>
+            <mat-card-title class="title">{{ movie.title }}</mat-card-title>
+            <mat-card-subtitle>
+              Genres: {{ getGenresAsString(movie.movieGenres) }}
+            </mat-card-subtitle>
+            
+                        <mat-card-subtitle>Start : {{ movie.startDate | date: 'mediumDate' }}</mat-card-subtitle>
+           <mat-card-subtitle>  Time :{{movie.runTime}} min</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="description-scroll">{{ movie.description }}</div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" [routerLink]="['/movies', movie.movieId]">View</button>
+            <button mat-button color="accent" (click)="addToBasket(movie)">Add to Basket</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>

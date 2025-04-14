@@ -10,7 +10,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:5000/api/Account';
-  private tokenKey = 'jwt_token';
+  private tokenKey = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik1hcmtvIiwibmFtZWlkIjoiMDhjY2QzNTYtZDg4Ny00ZWM0LWEwMTktYTc3MjUzOTA4ZjExIiwiZW1haWwiOiJtYXJrb0BnbWFpbC5jb20iLCJuYmYiOjE3NDQ2MzYxMDEsImV4cCI6MTc0NTI0MDkwMSwiaWF0IjoxNzQ0NjM2MTAxfQ.9Nm-4xAwDjG_48o02of6ddhl1HdVu9agy0gI4pJ1P6GY3aqqS2sPs6OedBVMQa5oCWikbFxnyaxUCRjg1bYP-w';
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) {}

@@ -51,14 +51,15 @@ namespace API.Services
                 ).ToList();
             }
 
-            // Filtriranje po žanru
-            if (!string.IsNullOrEmpty(genres))
-            {
-                var genreList = genres.ToLower().Split(",").ToList();
-                movies = movies.Where(m =>
-                    m.MovieGenres.Any(g => genreList.Contains(g.Genre.Name.ToLower()))
-                ).ToList();
-            }
+           if (!string.IsNullOrEmpty(genres))
+{
+            var genreTerms = genres.ToLower().Split(",").Select(g => g.Trim()).ToList();
+            movies = movies.Where(m =>
+                m.MovieGenres.Any(g =>
+                    genreTerms.Any(term => g.Genre.Name.ToLower().Contains(term))
+                )
+            ).ToList();
+        }
 
             // Filtriranje po glumcima
             if (!string.IsNullOrEmpty(actors))

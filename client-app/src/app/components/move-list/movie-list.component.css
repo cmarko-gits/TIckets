@@ -1,17 +1,46 @@
-/* Kontajner za kartice */
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.filter-container {
+    width: 250px;
+    padding: 20px;
+    background-color: #34495e;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+}
+
+.filter-field {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.movie-container {
+    flex-grow: 1;
+    background-color: #2c3e50;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: #ecf0f1;
+}
+
+.mat-grid-list {
+    gap: 20px;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.title {
-    text-align: center;
-}
-/* Animacija za karticu - skaliranje pri hoveru */
 .movie-card {
     display: flex;
     flex-direction: column;
-    height: 600px;
+    height: 650px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -19,7 +48,57 @@
     padding: 20px; /* Razmak unutar kartice */
 }
 
-/* Razmak između slika, naslova, opisa i dugmadi */
+
+.movie-card > * {
+    margin-bottom: 20px;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.movie-poster {
+    object-fit: contain;
+    max-height: 250px;
+    width: 100%;
+    background-color: #f0f0f0;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+mat-card-header {
+    margin-top: 8px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.description-scroll {
+    max-height: 120px;
+    overflow-y: auto;
+    padding-right: 6px;
+    font-size: 14px;
+    color: #7f8c8d;
+    opacity: 0;
+    animation: fadeIn 1s 0.5s forwards;
+}
+
+mat-card-actions button {
+    width: 100%;
+    margin-top: auto;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
 .movie-card > * {
     margin-bottom: 20px; /* Razmak između svih elemenata */
 }
@@ -39,65 +118,6 @@
     to {
         opacity: 1;
     }
-}
-
-/* Animacija za header - ulazak sa strane */
-mat-card-header {
-    margin-top: 8px;
-    animation: slideIn 0.5s ease-out; /* Animacija ulaska */
-}
-
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Scroll opis sa tranzicijom */
-.description-scroll {
-    max-height: 120px;
-    overflow-y: auto;
-    padding-right: 6px;
-    font-size: 14px;
-    color: white; /* Boja teksta na belo */
-    opacity: 0;
-    animation: fadeIn 1s 0.5s forwards; /* Fade-in sa malim kašnjenjem */
-}
-
-/* Dugmadi - tranzicija za hover efekat */
-mat-card-actions button {
-    transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-mat-card-actions button:hover {
-    transform: scale(1.1); /* Uvećanje dugmadi pri hoveru */
-    background-color: #0056b3; /* Tamnija boja pri hoveru */
-}
-
-/* Animacija za karticu ulazak - polako od dole */
-@keyframes cardSlideIn {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.movie-card {
-    animation: cardSlideIn 0.6s ease-out;
-}
-
-/* Postavljanje dugmadi na dno kartice */
-mat-card-actions {
-    margin-top: auto; /* Guranje dugmadi na dno */
 }
 
 @media (max-width: 992px) {
@@ -120,7 +140,6 @@ mat-card-actions {
     }
 }
 
-/* Mobilni telefoni */
 @media (max-width: 600px) {
     .movie-card {
         padding: 10px;
