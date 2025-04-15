@@ -1,9 +1,15 @@
 <mat-toolbar color="primary">
-  <span style="flex: 1 1 auto;">Movies</span>
+  <span class="movies-title">Movies</span>
 
-  <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
-    <span style="margin-right: 10px;">{{ username }}</span> <!-- Display username -->
+  <!-- Korpa sa brojem stavki -->
+  <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">    <button mat-icon-button routerLink="/basket" class="basket-btn">
+    <mat-icon>shopping_cart</mat-icon>
+    <span *ngIf="basketItemCount > 0" class="badge">{{ basketItemCount }}</span>
+  </button>
+    <span class="username">{{ username }}</span> <!-- Prikazivanje korisničkog imena -->
     <button mat-button (click)="logout()">Logout</button>
+
+
   </ng-container>
 
   <ng-template #guestLinks>

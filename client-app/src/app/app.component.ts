@@ -24,8 +24,8 @@ import { HttpClientModule } from '@angular/common/http';  // Import HttpClientMo
     HttpClientModule  // Add HttpClientModule here
   ],
   template: `
-    <app-header></app-header>
-    <div class="content">
+      <app-header></app-header>
+      <div class="content">
       <router-outlet></router-outlet>
     </div>
     <app-footer></app-footer>

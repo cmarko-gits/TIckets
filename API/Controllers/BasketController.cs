@@ -41,7 +41,6 @@ namespace API.Controllers
             return Ok(items);
         }
 
-        // POST: api/Basket/add/{movieId}
         [HttpPost]
         public async Task<ActionResult<BasketItem>> AddMovieToBasket(int movieId)
         {
@@ -61,11 +60,10 @@ namespace API.Controllers
                 UserName = username,
                 MovieId = movieDto.MovieId,
                 Title = movieDto.Title,
-                PosterUrl = movieDto.Poster, // prilagodi prema poljima u MovieDto modelu
+                PosterUrl = movieDto.Poster, 
                 Quantity = 1
             };
 
-            // Opcionalno: Ako već postoji stavka sa istim MovieId, možete povećati quantity
             var existingItem = await _context.BasketItems
                 .FirstOrDefaultAsync(item => item.UserName == username && item.MovieId == movieDto.MovieId);
 
@@ -82,6 +80,64 @@ namespace API.Controllers
             
         }
 
+        [HttpPost("removeOne")]
+        public async Task<ActionResult> RemoveOne(int movieId)
+        {
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            if (string.IsNullOrEmpty(username))
+                return Unauthorized("Korisnik nije ulogovan");
+
+            var item = await _context.BasketItems
+                .FirstOrDefaultAsync(i => i.UserName == username && i.MovieId == movieId);
+
+            if (item == null)
+                return NotFound("Stavka nije pronađena u korpi");
+
+            if (item.Quantity > 1)
+            {
+                item.Quantity--;
+            }
+            else
+            {
+                _context.BasketItems.Remove(item);
+            }
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest("Došlo je do greške prilikom uklanjanja stavke");
+        }
+
+        [Authorize]
+        [HttpDelete("{movieId}")]  
+        public async Task<ActionResult> RemoveItem(int movieId)
+        {
+            var username = User.FindFirstValue(ClaimTypes.Name);
+
+            if (string.IsNullOrEmpty(username))
+            {
+                return Unauthorized();
+            }
+
+            var item = await _context.BasketItems
+                .FirstOrDefaultAsync(b => b.UserName == username && b.MovieId == movieId);  // Koristi movieId
+
+            if (item == null) 
+            {
+                return NotFound();
+            }
+
+            _context.BasketItems.Remove(item);
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) 
+            {
+                return Ok();
+            }
+
+            return BadRequest("Problem prilikom brisanja stavke iz korpe");
+        }
 
 
     }

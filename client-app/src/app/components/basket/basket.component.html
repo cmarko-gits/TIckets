@@ -1,5 +1,27 @@
-<mat-list>
-  <mat-list-item *ngFor="let item of basketItems">
-    {{ item.title }} - Quantity: {{ item.quantity }}
-  </mat-list-item>
-</mat-list>
+<div class="container">
+  <mat-card *ngFor="let item of basketItems" class="basket-item-card">
+    <div class="item-content mat-elevation-z1">
+      <!-- POSTER SLIKE -->
+      <img mat-card-image [src]="item.posterUrl" alt="{{ item.title }}" class="poster">
+  
+      <!-- DETALJI O FILMU -->
+      <div class="details">
+        <h3>{{ item.title }}</h3>
+        <div class="quantity-controls">
+          <button mat-icon-button (click)="decreaseQuantity(item)">
+            <mat-icon>remove</mat-icon>
+          </button>
+          <span>{{ item.quantity }}</span>
+          <button mat-icon-button (click)="increaseQuantity(item)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+  
+      <!-- Dugme za brisanje -->
+      <button mat-icon-button color="warn" (click)="removeItem(item.movieId)" class="delete-btn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card>
+</div>

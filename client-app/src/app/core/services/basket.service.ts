@@ -20,4 +20,14 @@ export class BasketService {
   addToBasket(movieId: number): Observable<BasketItem> {
     return this.apiService.post<BasketItem>(`${this.baseUrl}?movieId=${movieId}`, {});
   }
+
+  removeOne(movieId: number): Observable<any> {
+    return this.apiService.post(`Basket/removeOne?movieId=${movieId}`, {});
+  }
+
+  removeItem(movieId: number): Observable<any> {
+    return this.apiService.delete(`Basket/${movieId}`);  // Pozivamo DELETE metod sa movieId kao parametrom
+  }
+  
+  
 }

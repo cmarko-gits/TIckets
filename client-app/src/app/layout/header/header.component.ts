@@ -1,35 +1,52 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { BasketService } from '../../core/services/basket.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  standalone: true,
   imports: [
-    CommonModule, // ✅ Obavezno za *ngIf
-    MatButtonModule, // Dodaj button module
-    MatToolbarModule // Dodaj toolbar module
+    CommonModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatIconModule,
+    RouterModule // Da bi `routerLink` radio
   ]
 })
 export class HeaderComponent implements OnInit {
   username: string | null = null;
+  public basketItemCount: number = 0;
 
   constructor(
-    public authService: AuthService, 
-    private router: Router
+    public authService: AuthService,
+    private basketService: BasketService
   ) {}
 
-  ngOnInit(): void {
-    this.username = this.authService.getUsername();
+  ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.username = this.authService.getUsername();
+      this.loadBasketItemCount();
+    }
   }
 
-  logout(): void {
+  loadBasketItemCount() {
+    this.basketService.getBasket().subscribe(items => {
+      this.basketItemCount = items.reduce((total, item) => total + item.quantity, 0);
+    });
+  }
+  
+  
+
+  logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.username = null;
+    this.basketItemCount = 0;
   }
 }

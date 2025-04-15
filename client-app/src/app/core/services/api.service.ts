@@ -30,4 +30,10 @@ export class ApiService {
     const headers = this.setAuthHeaders();
     return this.http.post<T>(`${this.apiUrl}${url}`, body, { headers });
   }
+
+  delete<T>(url: string, params?: any): Observable<T> {
+    const headers = this.setAuthHeaders();
+    return this.http.delete<T>(`${this.apiUrl}${url}`, { headers, params });
+  }
+  
 }
