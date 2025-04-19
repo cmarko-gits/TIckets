@@ -1,43 +1,47 @@
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  .basket-item-card {
-    margin: 16px 0;
-  }
-  
-  .item-content {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    justify-content: space-between; /* Ovdje dodajemo prostor između sadržaja i dugmeta */
-  }
-  
-  .poster {
-    width: 100px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  
-  .details {
-    flex: 1;
-    margin-left: 20px;
-  }
-  
-  .quantity-controls {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-  }
-  
-  .quantity {
-    margin: 0 12px;
-    font-weight: bold;
-  }
-  
-  .delete-btn {
-    margin-left: 16px; /* Razmak od desne strane */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+}
+
+.poster {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.details {
+  flex: 1;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-btn {
+  align-self: flex-start;
+}
+
+.checkout {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.empty-message {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}

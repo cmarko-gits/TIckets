@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatOptgroup, MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-register',
@@ -15,22 +17,42 @@ import { MatButtonModule } from '@angular/material/button';
   imports : [ FormsModule , CommonModule , ReactiveFormsModule , MatCardModule,    MatCardModule,
     MatFormFieldModule,  // Dodaj ovo
     MatInputModule,      // Dodaj ovo
-    MatButtonModule]
+    MatButtonModule ,
+    MatSelectModule,
+    MatOptionModule,]
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-
+    genreList: string[] = [
+      'Fantazija',
+      'Romantični',
+      'Drama',
+      'Mjuzikl',
+      'Romantični/ljubavni',
+      'Akcija',
+      'Komedija ',
+      'Triler',
+      'Avantura' ,
+      'Animirani' ,
+      'Naučna fantastika' , 
+      'Horor'
+    ];
+    
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required], // Izmena: umesto fullName sada je username
+      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      confirmPassword: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      address: ['', Validators.required],
+      favoriteGenres: [[]] // inicijalno prazna lista
     });
+    
   }
 
   register() {

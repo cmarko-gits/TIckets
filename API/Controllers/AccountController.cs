@@ -24,39 +24,42 @@ namespace API.Controllers
         }
 
         [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
-        {
-            // Provera da li je korisničko ime zauzeto
-            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
-            {
-                ModelState.AddModelError("username", "Username already taken");
-                return ValidationProblem();
-            }
+[AllowAnonymous]
+public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+{
+    // Provera da li je korisničko ime zauzeto
+    if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+    {
+        ModelState.AddModelError("username", "Username already taken");
+        return ValidationProblem();
+    }
 
-            // Provera da li je email zauzet
-            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
-            {
-                ModelState.AddModelError("email", "Email already taken");
-                return ValidationProblem();
-            }
+    // Provera da li je email zauzet
+    if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+    {
+        ModelState.AddModelError("email", "Email already taken");
+        return ValidationProblem();
+    }
 
-            // Kreiranje novog korisnika
-            var user = new User
-            {
-                Email = registerDto.Email,
-                UserName = registerDto.Username,
-            };
+    // Kreiranje novog korisnika sa svim podacima
+    var user = new User
+    {
+        Email = registerDto.Email,
+        UserName = registerDto.Username,
+        PhoneNumber = registerDto.PhoneNumber,
+        Address = registerDto.Address,
+        FavoriteGenres = registerDto.FavoriteGenres ?? new List<string>()
+    };
 
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+    var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (result.Succeeded)
-            {
-                return CreateUserObject(user); 
-            }
+    if (result.Succeeded)
+    {
+        return CreateUserObject(user); 
+    }
 
-            return Unauthorized(result.Errors);
-        }
+    return Unauthorized(result.Errors);
+}
 
         [AllowAnonymous]
         [HttpPost("login")]

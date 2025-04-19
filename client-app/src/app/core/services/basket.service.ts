@@ -29,5 +29,8 @@ export class BasketService {
     return this.apiService.delete(`Basket/${movieId}`);  // Pozivamo DELETE metod sa movieId kao parametrom
   }
   
-  
+  reserveFromBasket(): Observable<any> {
+    return this.apiService.post('Reservation', {}); // POST /api/Reservation
+  }
+    
 }

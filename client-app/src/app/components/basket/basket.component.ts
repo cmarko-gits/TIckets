@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { BasketService } from '../../core/services/basket.service';
 import { BasketItem } from '../../model/basketItem.model';
+import { routes } from '../../app.routes';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +18,8 @@ import { BasketItem } from '../../model/basketItem.model';
 })
 export class BasketComponent implements OnInit {
   basketItems: BasketItem[] = [];
+  private router: Router = new Router; 
+
 
   constructor(private basketService: BasketService) {}
 
@@ -46,16 +50,29 @@ export class BasketComponent implements OnInit {
   this.basketService.removeItem(movieId).subscribe({
     next: () => {
       this.basketItems = this.basketItems.filter(item => item.movieId !== movieId);
+      
     },
     error: err => {
       console.error('Greška pri brisanju filma iz korpe', err);
     }
   });
 }
+reserve() {
+  this.basketService.reserveFromBasket().subscribe({
+    next: () => {
+      this.basketItems = []; 
+      this.router.navigate(['/reservation'])
+    },
+    error : () =>{
+      this.router.navigate(['/reservation'])
+
+    }
+  });
+}
+get totalTickets(): number {
+  return this.basketItems.reduce((sum, item) => sum + item.quantity, 0);
+}
 
 
-  buy() {
-    alert('Kupovina uspešna!');
-    // Ovde možeš dodati logiku za pražnjenje korpe nakon kupovine
-  }
+
 }

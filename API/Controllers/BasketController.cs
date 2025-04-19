@@ -129,14 +129,10 @@ namespace API.Controllers
             }
 
             _context.BasketItems.Remove(item);
-            var result = await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync() ;
 
-            if (result) 
-            {
-                return Ok();
-            }
-
-            return BadRequest("Problem prilikom brisanja stavke iz korpe");
+         
+            return Ok("Izbrisan film iz korpe");
         }
 
 

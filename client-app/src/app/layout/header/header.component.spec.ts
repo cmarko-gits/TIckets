@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class HeaderComponent {
 username: any;
+basketItemCount: any;
   constructor(
     public authService: AuthService,
     private router: Router

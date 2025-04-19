@@ -1,0 +1,29 @@
+.reservations-container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .reservation-card {
+    width: calc(33.33% - 16px); /* 3 po redu sa razmakom */
+    display: flex;
+    flex-direction: column;
+  }
+  mat-card-content {
+    flex-grow: 1;
+  }
+  mat-card-image {
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  button{
+    cursor: pointer;
+  }

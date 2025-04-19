@@ -17,6 +17,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';  // Dodaj MatCheckboxModule
+import { MatIconModule } from '@angular/material/icon';  // Ako koristiš ikone u `mat-checkbox`
 
 @Component({
   selector: 'app-movie-list',
@@ -33,7 +35,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatToolbarModule,
     RouterModule,
-    MatNativeDateModule ,
+    MatNativeDateModule,
+    MatCheckboxModule,  // Dodaj MatCheckboxModule za checkbox u selektovanju žanrova
+    MatIconModule,  // Dodaj ako koristiš ikone
     ReactiveFormsModule
   ]
 })
@@ -46,13 +50,14 @@ export class MovieListComponent implements OnInit {
     private basketService: BasketService,
     private authService: AuthService,
     private snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router // Dodano za navigaciju
   ) {}
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({
       searchTerm: '',
-      genres: '',
+      genres: [],
       actors: '',
       director: '',
       minDuration: '',
@@ -64,44 +69,59 @@ export class MovieListComponent implements OnInit {
 
     this.fetchMovies();  // Load movies when the component initializes
   }
+
   getGenresAsString(genres: any[]): string {
     return genres.map(g => g.genre.name).join(', ');
   }
-  
+
   getFilteredMovies(
-    searchTerm: string, 
-    genres: string, 
-    actors: string, 
-    director: string, 
-    minDuration: number, 
-    maxDuration: number, 
-    startDate: string, 
-    endDate: string, 
+    searchTerm: string,
+    genres: string,
+    actors: string,
+    director: string,
+    minDuration: number,
+    maxDuration: number,
+    startDate: string,
+    endDate: string,
     orderBy: string
   ): void {
     const filters = {
       searchTerm, genres, actors, director, minDuration, maxDuration, startDate, endDate, orderBy
     };
 
-    // Call the service to fetch the filtered movies
     this.movies$ = this.movieService.getFilteredMovies(filters);
   }
-  
-  // Filter movies based on the form values
+
+  isGenreSelected(genre: string): boolean {
+    return this.filterForm.value.genres?.includes(genre);
+  }
+
+  onGenreChange(genre: string, event: any): void {
+    const selectedGenres = this.filterForm.get('genres')?.value;
+
+    if (event.checked) {
+      selectedGenres.push(genre);
+    } else {
+      const index = selectedGenres.indexOf(genre);
+      if (index > -1) {
+        selectedGenres.splice(index, 1);
+      }
+    }
+  }
+
   onFilter(): void {
     const filters = this.filterForm.value;
     this.getFilteredMovies(
-      filters.searchTerm, filters.genres, filters.actors, filters.director, 
-      filters.minDuration, filters.maxDuration, filters.startDate, 
+      filters.searchTerm, filters.genres, filters.actors, filters.director,
+      filters.minDuration, filters.maxDuration, filters.startDate,
       filters.endDate, filters.orderBy
     );
   }
 
-  // Add movie to basket
   addToBasket(movie: Movie): void {
-    const username = this.authService.getUsername();  // Get username from AuthService
+    const username = this.authService.getUsername();  
     if (!username) {
-      alert('You must be logged in to add a movie to the basket.');
+      this.router.navigate(['/login']);
       return;
     }
 
@@ -115,7 +135,6 @@ export class MovieListComponent implements OnInit {
     });
   }
 
-  // Fetch all movies initially
   private fetchMovies(): void {
     this.movies$ = this.movieService.getMovies();
   }

@@ -1,8 +1,16 @@
+mat-card-title{
+  padding: 20px;
+}
 .auth-card {
-  max-width: 400px;
+  max-width: 700px;
   margin: 20px auto;
 }
 
 .full-width {
   width: 100%;
+}
+::ng-deep .dropdown-down-only.mat-select-panel {
+  transform-origin: top center !important;
+  top: 100% !important;
+  bottom: auto !important;
 }

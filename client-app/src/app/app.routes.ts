@@ -4,6 +4,7 @@ import { MovieDetailComponent } from './components/movie-dateils/movie-detail.co
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { BasketComponent } from './components/basket/basket.component';
+import { ReservationMoviesComponent } from './components/reservations/reservations.component';
 
 
 
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'register' , component : RegisterComponent} ,
   {path : 'login' , component : LoginComponent} ,
   { path: 'basket', component: BasketComponent },
+  { path : 'reservation' , component : ReservationMoviesComponent},
   { path: '', redirectTo: '/movies', pathMatch: 'full' },
 ];

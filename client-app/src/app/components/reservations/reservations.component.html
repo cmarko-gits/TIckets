@@ -1,0 +1,34 @@
+<div class="reservations-container">
+  <div class="grid">
+    <mat-card *ngFor="let reservation of userReservations" class="reservation-card mat-elevation-z3">
+      <img mat-card-image [src]="reservation.poster" alt="{{ reservation.title }}" />
+      <mat-card-content>
+        <div class="card-header">
+          <h3>{{ reservation.title }}</h3>
+
+          <!-- Ikonica za status gledanosti -->
+          <mat-icon
+          (click)="toggleWatched(reservation.movieId)"
+            class="watched-icon"
+            [ngClass]="{ 'watched': isWatchedMap[reservation.movieId], 'unwatched': !isWatchedMap[reservation.movieId] }"
+          >
+            {{ isWatchedMap[reservation.movieId] ? 'visibility' : 'visibility_off' }}
+          </mat-icon>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+ 
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="cancelReservation(reservation.movieId)"
+          [disabled]="isWatchedMap[reservation.movieId]"
+          matTooltip="Otkazivanje nije moguće ako je film gledan"
+        >
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

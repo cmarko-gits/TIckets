@@ -34,6 +34,31 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" placeholder="+381...">
+        <mat-error *ngIf="registerForm.get('phoneNumber')?.hasError('required')">
+          Phone number is required
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" placeholder="Your address">
+        <mat-error *ngIf="registerForm.get('address')?.hasError('required')">
+          Address is required
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Favorite Genres</mat-label>
+        <mat-select formControlName="favoriteGenres" multiple [panelClass]="'dropdown-down-only'">
+          <mat-option *ngFor="let genre of genreList" [value]="genre">{{ genre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      
+      
       <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Register</button>
     </form>
   </mat-card-content>
