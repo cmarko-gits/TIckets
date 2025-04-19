@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 import { ReservationService } from '../../core/services/reservation.service';
 import { MovieService } from '../../core/services/movie.service';
 import { Movie } from '../../model/movie.model';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-reservation-movies',
-  standalone: true,
   templateUrl: './reservations.component.html',
   styleUrls: ['./reservations.component.css'],
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, FormsModule]  
 })
 export class ReservationMoviesComponent implements OnInit {
   userReservations: Movie[] = [];
   isWatchedMap: { [movieId: number]: boolean } = {};
+  isRatedMap: { [movieId: number]: boolean } = {};
+  rateMap: { [movieId: number]: number } = {}; // Stores ratings for each movie
 
   constructor(
     private reservationService: ReservationService,
@@ -33,14 +35,18 @@ export class ReservationMoviesComponent implements OnInit {
         const movieRequests = movieIds.map(id =>
           this.movieService.getMovieById(id)
         );
-  
+
         forkJoin(movieRequests).subscribe({
           next: (movies) => {
             this.userReservations = movies.filter((movie): movie is Movie => !!movie);
-  
+
             // Ovde pozivamo proveru za svaki film
             this.userReservations.forEach(movie => {
+              this.checkIfMovieRated(movie.movieId).subscribe(isRated => {
+                this.isRatedMap[movie.movieId] = isRated;
+              });
               this.checkIfWatched(movie.movieId);
+              this.getRating(movie.movieId); // Fetch rating for each movie
             });
           },
           error: err => {
@@ -53,19 +59,34 @@ export class ReservationMoviesComponent implements OnInit {
       }
     });
   }
-  
+
+  checkIfMovieRated(movieId: number): Observable<boolean> {
+    return this.reservationService.isMovieRated(movieId); // Pretpostavljamo da servis vraća Observable
+  }
+
   checkIfWatched(movieId: number): void {
     this.reservationService.isMovieWatched(movieId).subscribe({
       next: (isWatched) => {
         this.isWatchedMap[movieId] = isWatched;
-        console.log(movieId , ": " , isWatched)
       },
       error: (err) => {
         console.error('Greška prilikom provere da li je film pogledan:', err);
       }
     });
   }
-  
+
+  toggleWatched(movieId: number): void {
+    this.reservationService.toggleWatched(movieId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.checkIfWatched(movieId); // Ponovo proveravamo status nakon promene
+      },
+      error: (err) => {
+        console.error('Greška prilikom promene statusa gledanosti:', err);
+      }
+    });
+  }
+
   cancelReservation(id: number): void {
     this.reservationService.cancelReservation(id).subscribe({
       next: (message: string) => {
@@ -77,16 +98,43 @@ export class ReservationMoviesComponent implements OnInit {
       }
     });
   }
+
+  rateMovie(movieId: number, rating: number): void {
+    // Ensure the movie is watched before allowing the user to rate it
+    const reservation = this.userReservations.find(movie => movie.movieId === movieId);
+    
+    if (reservation && this.isWatchedMap[movieId]) {
+      // Send the rating to the backend
+      this.reservationService.rateMovie(movieId, rating).subscribe({
+        next: (response) => {
+          console.log('Ocena postavljena:', response);
+          // After successfully rating, update the reservation object
+          reservation.rating = rating;
+          // Optionally, update the UI to reflect the rating (you can use a separate method for this if needed)
+        },
+        error: (err) => {
+          console.error('Greška prilikom postavljanja ocene:', err);
+        }
+      });
+    } else {
+      console.error('Film mora biti označen kao gledan pre nego što ga ocenite.');
+    }
+  }
+
+  getRating(movieId: number): void {
+    // Check if the rating is already stored
+    if (this.rateMap[movieId] !== undefined) {
+      return; // Return early if the rating is already loaded
+    }
   
-  toggleWatched(movieId: number): void {
-    this.reservationService.toggleWatched(movieId).subscribe({
-      next: () => {
-        this.isWatchedMap[movieId] = !this.isWatchedMap[movieId];
+    this.reservationService.getRating(movieId).subscribe({
+      next: (rating) => {
+        console.log(rating)
+        this.rateMap[movieId] = rating; // Store the rating for this movie
       },
       error: (err) => {
-        console.error('Greška prilikom menjanja statusa gledanosti:', err);
+        console.error('Greška prilikom dobijanja ocene:', err);
       }
     });
   }
-  
-  }
+}

@@ -18,4 +18,5 @@ export interface Movie {
   movieGenres: { movieGenreId: number; movieId: number; genreId: number; genre: { genreId: number; name: string } }[];
   isDescriptionExpanded?: boolean; // Za proširenje opisa
   isWatched : boolean
+  rating?:number
 }

@@ -11,7 +11,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // Samo ulogovani korisnici mogu pristupiti
+    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -109,7 +109,6 @@ namespace API.Controllers
             return BadRequest("Došlo je do greške prilikom uklanjanja stavke");
         }
 
-        [Authorize]
         [HttpDelete("{movieId}")]  
         public async Task<ActionResult> RemoveItem(int movieId)
         {

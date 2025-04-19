@@ -1,29 +1,93 @@
 .reservations-container {
-    width: 1200px;
-    margin: 0 auto;
-    padding: 16px;
-  }
-  
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-  }
-  
-  .reservation-card {
-    width: calc(33.33% - 16px); /* 3 po redu sa razmakom */
-    display: flex;
-    flex-direction: column;
-  }
-  mat-card-content {
-    flex-grow: 1;
-  }
-  mat-card-image {
-    height: 300px;
-    object-fit: cover;
-  }
-  
-  button{
-    cursor: pointer;
-  }
+  padding: 20px;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.reservation-card {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.reservation-card:hover {
+  transform: scale(1.05);
+}
+
+.mat-card-content h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+
+.mat-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.mat-card-image:hover {
+  opacity: 0.7;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+button.mat-icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button.mat-icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+button.mat-icon-button[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.star-rating {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.star-rating mat-icon {
+  font-size: 24px;
+  color: #ff9800; /* Zlatna boja za zvezde */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star-rating mat-icon:hover,
+.star-rating mat-icon:active {
+  color: #ff5722; /* Crvena boja pri hover-u */
+}
+
+.star-rating mat-icon[disabled] {
+  color: #e0e0e0; /* Svetlo siva za neaktivne zvezde */
+}
+
+.star-rating mat-icon.rated {
+  color: #ff9800; /* Zlatna boja za ocenjene zvezde */
+}
+
+/* Skrivanje običnih zvezda ako je film ocenjen */
+.star-rating mat-icon.star_border {
+  display: none;
+}
