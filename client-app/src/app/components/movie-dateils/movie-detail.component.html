@@ -19,22 +19,7 @@
     </ul>
   </div>
 
-  <!-- Form for quantity -->
-  <form (ngSubmit)="addToCart(movie, quantity)">
-    <div class="form-group">
-      <label for="quantity">Quantity:</label>
-      <input
-        id="quantity"
-        type="number"
-        [(ngModel)]="quantity"
-        name="quantity"
-        min="1"
-        max="10"
-        class="form-control"
-        required
-      />
-    </div>
-
+  <form (ngSubmit)="addToCart(movie)">
     <button type="submit" class="btn btn-primary">Add to Cart</button>
   </form>
 

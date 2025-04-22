@@ -1,16 +1,19 @@
+<!-- Unutar mat-toolbar -->
 <mat-toolbar color="primary">
   <span class="movies-title" routerLink="/movies" style="cursor: pointer;">Movies</span>
 
-  <!-- Korpa sa brojem stavki -->
-  <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">    
+  <ng-container *ngIf="authService.isLoggedIn(); else guestLinks">
     <button mat-icon-button routerLink="/basket" class="basket-btn">
-    <mat-icon>shopping_cart</mat-icon>
-    <span *ngIf="basketItemCount > 0" class="badge">{{ basketItemCount }}</span>
-  </button>
-    <span class="username">{{ username }}</span> <!-- Prikazivanje korisničkog imena -->
-    <button mat-button (click)="logout()">Logout</button>
+      <mat-icon>shopping_cart</mat-icon>
+      <span *ngIf="basketItemCount > 0" class="badge">{{ basketItemCount }}</span>
+    </button>
 
-
+    <!-- Username kao dropdown -->
+    <button mat-button [matMenuTriggerFor]="userMenu">{{ username }}</button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item routerLink="/reservation">Reservations</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
   </ng-container>
 
   <ng-template #guestLinks>

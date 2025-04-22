@@ -14,22 +14,18 @@ namespace API.Controllers
     [Authorize]
     public class BasketController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
         private readonly DataContext _context;
         private readonly MovieService _movieService;
 
         public BasketController(UserManager<User> userManager, DataContext context, MovieService movieService)
         {
-            _userManager = userManager;
             _context = context;
             _movieService = movieService;
         }
 
-        // GET: api/Basket
         [HttpGet]
         public async Task<ActionResult<List<BasketItem>>> GetBaskets()
         {
-            // Preuzimamo korisničko ime iz tokena
             var username = User.FindFirstValue(ClaimTypes.Name);
             if (string.IsNullOrEmpty(username))
                 return Unauthorized("Korisnik nije ulogovan");
@@ -44,17 +40,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<BasketItem>> AddMovieToBasket(int movieId)
         {
-            // Preuzimamo korisničko ime iz tokena
             var username = User.FindFirstValue(ClaimTypes.Name);
             if (string.IsNullOrEmpty(username))
                 return Unauthorized("Korisnik nije ulogovan");
 
-            // Dobijanje detalja filma preko MovieService
             var movieDto = await _movieService.GetMovieByIdAsync(movieId);
             if (movieDto == null)
                 return NotFound($"Film sa ID-jem {movieId} nije pronađen");
 
-            // Kreiraj novu stavku u basket-u
             var basketItem = new BasketItem
             {
                 UserName = username,

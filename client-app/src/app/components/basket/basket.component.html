@@ -1,16 +1,14 @@
 <div class="container">
-  <!-- Ako je korpa prazna -->
+  
   <div *ngIf="basketItems.length === 0" class="empty-message">
     <p>Vaša korpa je prazna.</p>
   </div>
 
-  <!-- Ako postoje stavke u korpi -->
   <mat-card *ngFor="let item of basketItems" class="basket-item-card">
     <div class="item-content mat-elevation-z1">
-      <!-- POSTER SLIKE -->
+     
       <img mat-card-image [src]="item.posterUrl" alt="{{ item.title }}" class="poster">
-  
-      <!-- DETALJI O FILMU -->
+
       <div class="details">
         <h3>{{ item.title }}</h3>
         <div class="quantity-controls">
@@ -24,14 +22,13 @@
         </div>
       </div>
   
-      <!-- Dugme za brisanje -->
       <button mat-icon-button color="warn" (click)="removeItem(item.movieId)" class="delete-btn">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   </mat-card>
 
-  <!-- Rezervacija -->
+ 
   <div class="checkout">
     <p>Ukupno karata: {{ totalTickets }}</p>
     <button mat-raised-button color="primary" (click)="reserve()" [disabled]="basketItems.length === 0">

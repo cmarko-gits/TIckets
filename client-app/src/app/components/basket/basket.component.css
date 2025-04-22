@@ -1,8 +1,10 @@
 .container {
   display: flex;
+  max-width: 1200px;
   flex-direction: column;
   gap: 15px;
   padding: 20px;
+  margin: 0 auto;
 }
 
 .item-content {

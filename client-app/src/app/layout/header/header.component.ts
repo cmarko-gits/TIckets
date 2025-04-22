@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,10 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    RouterModule // Da bi `routerLink` radio
+    RouterModule ,
+    MatMenuModule, 
+    CommonModule,
+    MatMenuModule
   ]
 })
 export class HeaderComponent implements OnInit {
@@ -29,14 +33,14 @@ export class HeaderComponent implements OnInit {
     private basketService: BasketService
   ) {}
 
-  ngOnInit() {
+   ngOnInit() {
     if (this.authService.isLoggedIn()) {
       this.username = this.authService.getUsername();
       this.loadBasketItemCount();
     }
   }
 
-  loadBasketItemCount() {
+   loadBasketItemCount() {
     this.basketService.getBasket().subscribe(items => {
       this.basketItemCount = items.reduce((total, item) => total + item.quantity, 0);
     });
@@ -44,7 +48,7 @@ export class HeaderComponent implements OnInit {
   
   
 
-  logout() {
+  async logout() {
     this.authService.logout();
     this.username = null;
     this.basketItemCount = 0;

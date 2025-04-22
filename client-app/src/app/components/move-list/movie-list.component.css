@@ -28,10 +28,10 @@
     color: #ecf0f1;
 }
 
-.mat-grid-list {
-    gap: 20px;
-}
-
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -120,44 +120,16 @@ mat-card-actions button {
     }
 }
 
+/* Laptopi i tableti: 2 kolone */
 @media (max-width: 992px) {
-    .container {
-        padding: 0 15px;
+    .movie-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
-
-    .movie-card {
-        height: auto;
-        padding: 15px;
+  }
+  
+  /* Telefoni: 1 kolona */
+  @media (max-width: 600px) {
+    .movie-grid {
+      grid-template-columns: 1fr;
     }
-
-    .movie-poster {
-        max-height: 200px;
-    }
-
-    .description-scroll {
-        max-height: 100px;
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 600px) {
-    .movie-card {
-        padding: 10px;
-        height: auto;
-        border-radius: 8px;
-    }
-
-    .movie-poster {
-        max-height: 150px;
-    }
-
-    .description-scroll {
-        max-height: 80px;
-        font-size: 12px;
-    }
-
-    mat-card-actions button {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-}
+  }

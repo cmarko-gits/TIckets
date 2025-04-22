@@ -1,6 +1,4 @@
-<!-- Main container -->
 <div class="main-container">
-  <!-- Filters Section placed outside the main container, on the left side -->
   <div class="filter-container">
     <form [formGroup]="filterForm" (ngSubmit)="onFilter()">
       <mat-form-field appearance="fill" class="filter-field">
@@ -47,8 +45,6 @@
       <button mat-raised-button color="accent" type="submit">Apply Filters</button>
     </form>
   </div>
-
-  <!-- Movies Section -->
   <div class="movie-container">
     <h1>Movies</h1>
     <mat-grid-list cols="3" gutterSize="16px" rowHeight="1:1.5">

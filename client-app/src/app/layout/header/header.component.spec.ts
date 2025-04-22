@@ -6,17 +6,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu'; // ✅ OVO DODAJ
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule , MatToolbarModule],
-
+  standalone: true, // ✅ pretpostavljam da ovo već imaš
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule // ✅ DODATO OVO
+  ],
 })
 export class HeaderComponent {
-username: any;
-basketItemCount: any;
+  username: any;
+  basketItemCount: any;
+
   constructor(
     public authService: AuthService,
     private router: Router

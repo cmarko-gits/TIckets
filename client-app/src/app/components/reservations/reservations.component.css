@@ -18,6 +18,10 @@
   transition: transform 0.3s ease;
 }
 
+.reservation-card h3{
+   color: #333;
+}
+
 .reservation-card:hover {
   transform: scale(1.05);
 }
@@ -69,25 +73,24 @@ button.mat-icon-button[disabled] {
 
 .star-rating mat-icon {
   font-size: 24px;
-  color: #ff9800; /* Zlatna boja za zvezde */
+  color: #ff9800; 
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .star-rating mat-icon:hover,
 .star-rating mat-icon:active {
-  color: #ff5722; /* Crvena boja pri hover-u */
+  color: #ff5722; 
 }
 
 .star-rating mat-icon[disabled] {
-  color: #e0e0e0; /* Svetlo siva za neaktivne zvezde */
+  color: #e0e0e0; 
 }
 
 .star-rating mat-icon.rated {
-  color: #ff9800; /* Zlatna boja za ocenjene zvezde */
+  color: #ff9800;
 }
 
-/* Skrivanje običnih zvezda ako je film ocenjen */
 .star-rating mat-icon.star_border {
   display: none;
 }
