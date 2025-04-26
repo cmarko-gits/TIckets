@@ -18,7 +18,7 @@ export class ReservationMoviesComponent implements OnInit {
   userReservations: Movie[] = [];
   isWatchedMap: { [movieId: number]: boolean } = {};
   isRatedMap: { [movieId: number]: boolean } = {};
-  rateMap: { [movieId: number]: number } = {}; // Stores ratings for each movie
+  rateMap: { [movieId: number]: number } = {}; 
 
   constructor(
     private reservationService: ReservationService,
@@ -61,7 +61,7 @@ export class ReservationMoviesComponent implements OnInit {
   }
 
   checkIfMovieRated(movieId: number): Observable<boolean> {
-    return this.reservationService.isMovieRated(movieId); // Pretpostavljamo da servis vraća Observable
+    return this.reservationService.isMovieRated(movieId); 
   }
 
   checkIfWatched(movieId: number): void {
@@ -79,7 +79,7 @@ export class ReservationMoviesComponent implements OnInit {
     this.reservationService.toggleWatched(movieId).subscribe({
       next: (response) => {
         console.log(response);
-        this.checkIfWatched(movieId); // Ponovo proveravamo status nakon promene
+        this.checkIfWatched(movieId); 
       },
       error: (err) => {
         console.error('Greška prilikom promene statusa gledanosti:', err);
@@ -104,13 +104,10 @@ export class ReservationMoviesComponent implements OnInit {
     const reservation = this.userReservations.find(movie => movie.movieId === movieId);
     
     if (reservation && this.isWatchedMap[movieId]) {
-      // Send the rating to the backend
       this.reservationService.rateMovie(movieId, rating).subscribe({
         next: (response) => {
           console.log('Ocena postavljena:', response);
-          // After successfully rating, update the reservation object
           reservation.rating = rating;
-          // Optionally, update the UI to reflect the rating (you can use a separate method for this if needed)
         },
         error: (err) => {
           console.error('Greška prilikom postavljanja ocene:', err);
@@ -122,15 +119,14 @@ export class ReservationMoviesComponent implements OnInit {
   }
 
   getRating(movieId: number): void {
-    // Check if the rating is already stored
     if (this.rateMap[movieId] !== undefined) {
-      return; // Return early if the rating is already loaded
+      return; 
     }
   
     this.reservationService.getRating(movieId).subscribe({
       next: (rating) => {
         console.log(rating)
-        this.rateMap[movieId] = rating; // Store the rating for this movie
+        this.rateMap[movieId] = rating; 
       },
       error: (err) => {
         console.error('Greška prilikom dobijanja ocene:', err);

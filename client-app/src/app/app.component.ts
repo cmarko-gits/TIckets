@@ -21,7 +21,7 @@ import { HttpClientModule } from '@angular/common/http';  // Import HttpClientMo
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule  // Add HttpClientModule here
+    HttpClientModule  
   ],
   template: `
       <app-header></app-header>

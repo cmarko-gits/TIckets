@@ -183,7 +183,7 @@ public async Task<ActionResult<int>> GetRating(int movieId)
 
     if (string.IsNullOrEmpty(username))
     {
-        return Unauthorized(); // Ako korisnik nije prijavljen, vraćamo Unauthorized
+        return Unauthorized();
     }
 
     // Pronađi rezervaciju za dati film i korisnika
@@ -198,10 +198,10 @@ public async Task<ActionResult<int>> GetRating(int movieId)
     // Proveri da li je film ocenjen
     if (reservation.Rating == null || reservation.Rating <= 0)
     {
-        return Ok(0); // Ako film nije ocenjen, vraćamo 0
+        return Ok(0);
     }
 
-    return Ok(reservation.Rating); // Vratite ocenu filma ako postoji
+    return Ok(reservation.Rating); 
 }
 
 

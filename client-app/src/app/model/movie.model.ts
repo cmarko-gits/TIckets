@@ -16,7 +16,7 @@ export interface Movie {
   director: { directorId: number; name: string };
   movieActors: { movieActorId: number; movieId: number; actorId: number; actor: { actorId: number; name: string } }[];
   movieGenres: { movieGenreId: number; movieId: number; genreId: number; genre: { genreId: number; name: string } }[];
-  isDescriptionExpanded?: boolean; // Za proširenje opisa
+  isDescriptionExpanded?: boolean; 
   isWatched : boolean
   rating?:number
 }

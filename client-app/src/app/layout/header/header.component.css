@@ -1,20 +1,20 @@
 mat-toolbar {
   display: flex;
-  justify-content: space-between; /* Razmešta elemente sa razmakom između */
+  justify-content: space-between; 
   align-items: center; /* Vertikalno centriranje */
 }
 
 .movies-title {
-  flex: 1; /* Pomaže da naziv "Movies" bude sa leve strane */
+  flex: 1; 
 }
 
 .username {
-  margin-right: 20px; /* Razmak između imena korisnika i logout dugmeta */
+  margin-right: 20px;
 }
 
 .basket-btn {
-  margin-left: 20px; /* Razmak između logout dugmeta i korpe */
-  margin-right: 20px; /* Dodaj malo razmaka između korpe i imena korisnika */
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .badge {

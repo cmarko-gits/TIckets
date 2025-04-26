@@ -7,7 +7,6 @@
         <div class="card-header">
           <h3>{{ reservation.title }}</h3>
 
-          <!-- Ikonica za gledano/ne gledano -->
           <button
             *ngIf="!isRatedMap[reservation.movieId]"
             (click)="toggleWatched(reservation.movieId)">
@@ -35,7 +34,6 @@
           </mat-icon>
         </div>
 
-        <!-- Prikaz ocene kao zvezdice -->
         <div *ngIf="isRatedMap[reservation.movieId]" class="star-rating">
           <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]" 
                     [ngClass]="{ 'rated': star <= rateMap[reservation.movieId] }"
@@ -46,7 +44,6 @@
       </mat-card-content>
 
       <mat-card-actions align="end">
-        <!-- Dugme za otkazivanje samo ako film NIJE ocenjen -->
         <button
           *ngIf="!isRatedMap[reservation.movieId]"
           mat-icon-button

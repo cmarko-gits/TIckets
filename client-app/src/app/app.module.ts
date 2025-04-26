@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { RouterModule } from '@angular/router';
 import { TokenInterceptor } from './core/services/auth.interceptor';
-import { MovieListComponent } from './components/move-list/movie-list.component';
 import { routes } from './app.routes';
 
 @NgModule({
@@ -12,7 +11,7 @@ import { routes } from './app.routes';
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes) // Ukoliko koristite routing
+    RouterModule.forRoot(routes) 
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

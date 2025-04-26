@@ -38,11 +38,11 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      const userData = this.loginForm.value; // userData = { email, password }
+      const userData = this.loginForm.value; 
 
       this.authService.login(userData).subscribe({
         next: () => {
-          this.router.navigate(['/']); // Navigacija nakon uspešnog logina
+          this.router.navigate(['/']); 
         },
         error: (err) => {
           console.error('Login failed:', err);

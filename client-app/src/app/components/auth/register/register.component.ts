@@ -50,7 +50,7 @@ export class RegisterComponent {
       confirmPassword: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       address: ['', Validators.required],
-      favoriteGenres: [[]] // inicijalno prazna lista
+      favoriteGenres: [[]]
     });
     
   }

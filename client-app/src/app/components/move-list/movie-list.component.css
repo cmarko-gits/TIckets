@@ -100,10 +100,9 @@ mat-card-actions button {
 }
 
 .movie-card > * {
-    margin-bottom: 20px; /* Razmak između svih elemenata */
+    margin-bottom: 20px; 
 }
 
-/* Slika - postavljanje sa razmakom */
 .movie-poster {
     object-fit: contain;
     max-height: 250px;
@@ -113,23 +112,75 @@ mat-card-actions button {
     animation: fadeIn 1s forwards; /* Fade-in efekat */
 }
 
-/* Animacija za sliku pri učitavanju */
 @keyframes fadeIn {
     to {
         opacity: 1;
     }
 }
 
-/* Laptopi i tableti: 2 kolone */
+@media (max-width: 1500px) {
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .filter-container {
+        width: 1000px; /* Adjust the width if needed */
+        padding: 15px;
+        display: flex;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        justify-content: space-around; /* Or use 'space-between' / 'flex-start' as needed */
+    }
+
+    .movie-container {
+        flex-grow: 1;
+        width: 90%;
+        padding: 15px;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .movie-card {
+        height: 600px;
+        padding: 15px;
+    }
+
+    .movie-poster {
+        max-height: 220px;
+    }
+
+    .description-scroll {
+        font-size: 13px;
+        max-height: 100px;
+    }
+}
 @media (max-width: 992px) {
     .movie-grid {
-      grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr); /* Display 2 columns */
+        gap: 10px;
     }
-  }
-  
-  /* Telefoni: 1 kolona */
-  @media (max-width: 600px) {
+}
+
+@media (max-width: 600px) {
     .movie-grid {
-      grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column for small screens */
     }
-  }
+
+    .filter-container {
+        width: 100%; /* Full width for small screens */
+    }
+
+    .movie-container {
+        width: 100%; /* Full width for small screens */
+        padding: 10px; /* Minimized padding */
+    }
+
+    .movie-card {
+        height: auto; /* Flexible height for smaller screens */
+    }
+}

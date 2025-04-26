@@ -12,5 +12,5 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   ]
 })
 export class FooterComponent {
-  year: number = new Date().getFullYear(); // To dynamically display the current year
+  year: number = new Date().getFullYear(); 
 }

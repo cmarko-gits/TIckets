@@ -27,21 +27,18 @@ namespace API.Controllers
 [AllowAnonymous]
 public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
 {
-    // Provera da li je korisničko ime zauzeto
     if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
     {
         ModelState.AddModelError("username", "Username already taken");
         return ValidationProblem();
     }
 
-    // Provera da li je email zauzet
     if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
     {
         ModelState.AddModelError("email", "Email already taken");
         return ValidationProblem();
     }
 
-    // Kreiranje novog korisnika sa svim podacima
     var user = new User
     {
         Email = registerDto.Email,
@@ -73,7 +70,7 @@ public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
 
             if (result)
             {
-                return CreateUserObject(user);  // This will return the UserDto with token.
+                return CreateUserObject(user);  
             }
 
             return Unauthorized();
@@ -86,7 +83,7 @@ public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
             var user = await _userManager.Users
                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-            if (user == null) return Unauthorized(); // Dodajte ovu proveru
+            if (user == null) return Unauthorized(); 
 
             return CreateUserObject(user);
         }

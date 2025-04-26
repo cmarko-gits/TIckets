@@ -16,12 +16,10 @@ export class CartService {
 
   constructor() {}
 
-  // Dobijanje trenutne korpe
   getCartItems() {
     return this.cartSubject.asObservable();
   }
 
-  // Dodavanje filma u korpu
   addToCart(movie: Movie, quantity: number) {
     const existingItem = this.cartItems.find(item => item.movie.movieId === movie.movieId);
 
@@ -34,13 +32,11 @@ export class CartService {
     this.cartSubject.next(this.cartItems);
   }
 
-  // Brisanje filma iz korpe
   removeFromCart(movieId: number) {
     this.cartItems = this.cartItems.filter(item => item.movie.movieId !== movieId);
     this.cartSubject.next(this.cartItems);
   }
 
-  // Praćenje ukupne količine u korpi (bez računanja ukupne cene)
   getTotalQuantity(): number {
     return this.cartItems.reduce((total, item) => total + item.quantity, 0);
   }

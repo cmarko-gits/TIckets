@@ -46,7 +46,4 @@ export class ApiService {
       responseType: 'text' as 'json'
     });
   }
-  
-  
-  
 }

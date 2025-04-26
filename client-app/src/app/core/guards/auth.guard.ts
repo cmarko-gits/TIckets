@@ -9,11 +9,11 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    // Ako korisnik JESTE ulogovan, redirektuj ga na '/movies'
+    
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/movies']);
-      return false;  // Ne dozvoljava pristup stranici
+      return false;
     }
-    return true;  // Dozvoljava pristup stranici ako nije ulogovan
+    return true;  
   }
 }
